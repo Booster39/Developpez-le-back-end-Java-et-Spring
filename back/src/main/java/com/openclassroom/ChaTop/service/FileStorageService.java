@@ -16,7 +16,7 @@ public class FileStorageService {
   private String picturesUrl;
 
   public FileStorageService() {
-    this.storageLocation = Paths.get("back/src/main/resources/static/public/");
+    this.storageLocation = Paths.get("src/main/resources/static/public/");
     try {
       Files.createDirectories(this.storageLocation);
     } catch (IOException e) {
