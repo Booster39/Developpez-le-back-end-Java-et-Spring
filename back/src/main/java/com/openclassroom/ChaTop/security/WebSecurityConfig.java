@@ -2,6 +2,10 @@ package com.openclassroom.ChaTop.security;
 
 import com.openclassroom.ChaTop.security.jwt.AuthEntryPointJwt;
 import com.openclassroom.ChaTop.security.jwt.AuthTokenFilter;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +24,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -62,7 +68,7 @@ public class WebSecurityConfig {
     http
       .authorizeHttpRequests(auth -> auth
         .antMatchers("/auth/welcome", "/auth/register", "/auth/login").permitAll()
-        .antMatchers("/v3/api-docs/**", "v3/swagger-ui/**", "v3/swagger-ui.html").permitAll()
+        .antMatchers("/v3/api-docs/**", "/v3/swagger-ui/**", "/v3/swagger-ui.html", "/swagger-ui/**", "/swagger-ui.html").permitAll()
         .antMatchers("/api/auth/**").permitAll()
         .antMatchers("/public/**").permitAll()
         .anyRequest().authenticated())
@@ -77,6 +83,23 @@ public class WebSecurityConfig {
     authenticationProvider.setUserDetailsService(userDetailsService);
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
+  }
+  @Bean
+  public OpenAPI customOpenAPI() {
+    return new OpenAPI()
+            .components(new Components().addSecuritySchemes("bearerAuth",
+                    new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")))
+            .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+  }
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS");
+      }
+    };
   }
 
 }
