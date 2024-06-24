@@ -15,14 +15,13 @@ Avant de commencer, assurez-vous d'avoir installé les outils suivants :
 Pour cloner le projet, ouvrez votre terminal et exécutez la commande suivante :
 
 ```sh
-git clone https://github.com/votre-utilisateur/votre-projet.git
+git clone https://github.com/Booster39/Developpez-le-back-end-Java-et-Spring.git
 ```
 
-Remplacez votre-utilisateur et votre-projet par votre nom d'utilisateur GitHub et le nom de votre projet.
 
 Ensuite, naviguez dans le répertoire du projet :
 ```sh
-cd votre-projet
+cd back
 ```
 ## Configuration de l'application
 Avant d'exécuter l'application, assurez-vous de configurer les propriétés nécessaires dans le fichier `application.properties` situé dans `src/main/resources/`.
