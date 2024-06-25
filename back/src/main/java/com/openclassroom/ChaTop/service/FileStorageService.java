@@ -1,5 +1,6 @@
 package com.openclassroom.ChaTop.service;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.beans.factory.annotation.Value;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class FileStorageService {
   private String picturesUrl;
 
   public FileStorageService() {
-    this.storageLocation = Paths.get("src/main/resources/static/public/");
+    this.storageLocation = Paths.get("src/uploads/images/");
     try {
       Files.createDirectories(this.storageLocation);
     } catch (IOException e) {

@@ -1,4 +1,4 @@
-package com.openclassroom.ChaTop.security;
+package com.openclassroom.ChaTop.configuration;
 
 import com.openclassroom.ChaTop.security.jwt.AuthEntryPointJwt;
 import com.openclassroom.ChaTop.security.jwt.AuthTokenFilter;
@@ -70,7 +70,7 @@ public class WebSecurityConfig {
         .antMatchers("/auth/welcome", "/auth/register", "/auth/login").permitAll()
         .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
         .antMatchers("/api/auth/**").permitAll()
-        .antMatchers("/public/**").permitAll()
+        .antMatchers("/public/**", "/uploads/**", "/images/**").permitAll()
         .anyRequest().authenticated()
       )
       .exceptionHandling(exception -> exception
