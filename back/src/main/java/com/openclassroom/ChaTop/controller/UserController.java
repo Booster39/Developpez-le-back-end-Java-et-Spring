@@ -36,32 +36,21 @@ public class UserController {
 
   @Operation(summary = "Obtenir un utilisateur par ID", description = "Retourne un utilisateur spécifique basé sur l'ID fourni.")
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200", description = "Détails de l'utilisateur",
-      content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))),
-    @ApiResponse(responseCode = "400", description = "Requête invalide",
-      content = @Content),
-    @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé",
-      content = @Content)
+          @ApiResponse(responseCode = "200", description = "Détails de l'utilisateur",
+                  content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))),
+          @ApiResponse(responseCode = "400", description = "Requête invalide",
+                  content = @Content),
+          @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé",
+                  content = @Content)
   })
   @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<UserDto> findById(@PathVariable("id") String id) {
     try {
-      User user = this.userService.findById(Long.valueOf(id));
-
-      if (user == null) {
+      UserDto userDto = userService.findUserDtoById(Long.valueOf(id));
+      if (userDto == null) {
         return ResponseEntity.notFound().build();
       }
-
-      var dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.ENGLISH);
-      String formattedDateString = user.getCreated_at().format(dateTimeFormatter);
-
-      var userDto = User.builder()
-        .id(user.getId())
-        .name(user.getName())
-        .email(user.getEmail())
-        .created_at(user.getCreated_at())
-        .build();
-      return ResponseEntity.ok().body(this.userMapper.toDto(userDto));
+      return ResponseEntity.ok().body(userDto);
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
