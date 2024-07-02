@@ -136,7 +136,7 @@ public class RentalController {
           @ApiResponse(responseCode = "404", description = "Location non trouvée",
                   content = @Content)
   })
-  @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> update(
           @PathVariable("id") String id,
           @RequestParam("name") @NotBlank @Size(max = 63) String name,
