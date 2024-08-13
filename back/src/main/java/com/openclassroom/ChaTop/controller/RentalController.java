@@ -112,8 +112,8 @@ public class RentalController {
           @RequestParam("name") @NotBlank @Size(max = 63) String name,
           @RequestParam("surface") @Min(0) float surface,
           @RequestParam("price") @Min(0) float price,
-          @RequestParam("description") @Size(max = 2000) String description,
-          @RequestHeader(value = "Authorization", required = false) String jwt
+            @RequestParam("description") @Size(max = 2000) String description,
+            @RequestHeader(value = "Authorization", required = false) String jwt
   ) {
     try {
       String username = jwtUtils.getUserNameFromJwtToken(jwt.substring(7));
